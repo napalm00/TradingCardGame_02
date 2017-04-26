@@ -14,7 +14,7 @@ public abstract class Utilities
         // If there are no more cards, pass automatically
         if(activePlayer.getHand().isEmpty() && activePlayer.getCreatures().isEmpty())
         {
-            System.out.println(activePlayer.getName() + " has no more cards, pass");
+            System.out.println(activePlayer.name() + " has no more cards, pass");
             return false;
         }
 		
@@ -22,7 +22,7 @@ public abstract class Utilities
         Scanner reader = Game.instance.getScanner();
 
         // Print a menu so the user can choose which cards/effects to play
-        System.out.println(activePlayer.getName() + " select card/effect to play, 0 to pass");
+        System.out.println(activePlayer.name() + " select card/effect to play, 0 to pass");
         int i = 0;
         for(Card card : activePlayer.getHand())
         {
@@ -39,19 +39,31 @@ public abstract class Utilities
             for(Effect effect : creature.avaliableEffects())
             {
                 avaibleEffects.add(effect);
-                System.out.println(Integer.toString(i + 1) + ") " + creature.getName() + ": [" + effect + "]");
+                System.out.println(Integer.toString(i + 1) + ") " + creature.name() + ": [" + effect + "]");
                 i++;
             }
         }
 		
-        int index = Integer.parseInt(reader.nextLine()) - 1;
-        if(index < 0 || index >= avaibleEffects.size())
-        {
-            System.out.println("Card index invalid, skipping");
-            return false;
-        }
+        if(reader.hasNextInt())
+		{
+			int index = reader.nextInt() - 1;
+			if(index < 0)
+			{
+				System.out.println("Passing");
+				return false;
+			}
+			else if(index >= avaibleEffects.size())
+			{
+				System.out.println("Card index invalid, skipping");
+				return false;
+			}
+
+			avaibleEffects.get(index).play();
+			
+			return true;
+		}
 		
-        avaibleEffects.get(index).play();
+		System.out.println("Input error, passing");
         
         return true;
     }

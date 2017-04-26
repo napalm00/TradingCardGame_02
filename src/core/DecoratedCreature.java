@@ -39,9 +39,9 @@ public class DecoratedCreature implements Damageable, Creature
     public void remove()
     {
         owner.getCreatures().remove(this);
-        System.out.println("Field: Removing " + getName());
+        System.out.println("Field: Removing " + name());
         onRemove();
-        Game.instance.getTriggers().trigger(Triggers.EXIT_CREATURE_FILTER);
+        Game.instance.getTriggers().trigger(Triggers.EXIT_CREATURE_FILTER, this);
     }
 
     /***
@@ -74,13 +74,13 @@ public class DecoratedCreature implements Damageable, Creature
     }
 
     /***
-     * Gets the creature's getName
+     * Gets the creature's name
      * 
-     * @return		String		The creature's getName
+     * @return		String		The creature's name
      */
-    public String getName()
+    public String name()
     {
-        return decorated.getName();
+        return decorated.name();
     }
 
     /***

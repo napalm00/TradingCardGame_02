@@ -15,17 +15,17 @@ public class BaseEndPhase implements Phase
     {
         Player currentPlayer = Game.instance.getCurrentPlayer();
 
-        System.out.println("End phase of" + currentPlayer.getName());
+        System.out.println("End phase of" + currentPlayer.name());
 
         for(Creature creature : currentPlayer.getCreatures())
         {
-            System.out.println(creature.getName() + " damage resetted");
+            System.out.println(creature.name() + " damage resetted");
             creature.resetDamage();
         }
 
         for(Creature creature : Game.instance.getCurrentAdversary().getCreatures())
         {
-            System.out.println(creature.getName() + " of " + Game.instance.getCurrentAdversary().getName() + " damage resetted");
+            System.out.println(creature.name() + " of " + Game.instance.getCurrentAdversary().name() + " damage resetted");
             creature.resetDamage();
         }
 

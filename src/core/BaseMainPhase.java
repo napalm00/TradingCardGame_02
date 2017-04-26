@@ -15,7 +15,7 @@ public class BaseMainPhase implements Phase
         Player currentPlayer = Game.instance.getCurrentPlayer();
         int responsePlayerID = (Game.instance.getPlayer(0) == currentPlayer) ? 1 : 0;
 
-        System.out.println("Main phase of " + currentPlayer.getName());
+        System.out.println("Main phase of " + currentPlayer.name());
 
         Game.instance.getTriggers().trigger(Triggers.MAIN_FILTER);
         int numberOfPasses = 0;

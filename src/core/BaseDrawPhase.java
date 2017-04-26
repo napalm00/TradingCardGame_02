@@ -15,7 +15,7 @@ public class BaseDrawPhase implements Phase
     {
         Player currentPlayer = Game.instance.getCurrentPlayer();
 
-        System.out.println("Draw phase of " + currentPlayer.getName());
+        System.out.println("Draw phase of " + currentPlayer.name());
 
         Game.instance.getTriggers().trigger(Triggers.DRAW_FILTER);
         currentPlayer.draw();

@@ -28,11 +28,11 @@ public abstract class AbstractCreature implements Creature
     {
         if(isTapped)
         {
-            System.out.println(topDecorator.getName() + " is already tapped");
+            System.out.println(topDecorator.name() + " is already tapped");
         }
         else
         {
-            System.out.println("Tapping " + topDecorator.getName());
+            System.out.println("Tapping " + topDecorator.name());
             isTapped = true;
         }
     }
@@ -44,11 +44,11 @@ public abstract class AbstractCreature implements Creature
     {
         if(!isTapped)
         {
-            System.out.println(topDecorator.getName() + " is not tapped");
+            System.out.println(topDecorator.name() + " is not tapped");
         }
         else
         {
-            System.out.println("Untapping " + topDecorator.getName());
+            System.out.println("Untapping " + topDecorator.name());
             isTapped = false;
         }
     }
@@ -132,7 +132,7 @@ public abstract class AbstractCreature implements Creature
      */
     public void onRemove()
     {
-        System.out.println("Removing " + getName());
+        System.out.println("Removing " + name());
     }
 
     /***
@@ -169,7 +169,7 @@ public abstract class AbstractCreature implements Creature
 
     public String toString()
     {
-        return topDecorator.getName() + "(" + topDecorator.power() + "/" + topDecorator.toughness() + ")";
+        return topDecorator.name() + "(" + topDecorator.power() + "/" + topDecorator.toughness() + ")";
     }
 
     /***

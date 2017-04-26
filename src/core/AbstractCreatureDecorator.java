@@ -47,9 +47,9 @@ public abstract class AbstractCreatureDecorator implements CreatureDecorator
      * 
      * @return		String		The card's name
      */
-    public String getName()
+    public String name()
     {
-        return decorated.getName();
+        return decorated.name();
     }
 
     /***

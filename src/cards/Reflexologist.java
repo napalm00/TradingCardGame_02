@@ -18,102 +18,119 @@ import interfaces.Effect;
 import java.util.ArrayList;
 import java.util.List;
 
+public class Reflexologist extends AbstractCard
+{
+	static private final String cardName = "Reflexologist";
 
-public class Reflexologist extends AbstractCard {
-    static private final String cardName = "Reflexologist";
-
-    static private StaticInitializer initializer =
-            new StaticInitializer(cardName, new CardConstructor()
+	static private StaticInitializer initializer
+			= new StaticInitializer(cardName, new CardConstructor()
+			{
+				public Card create()
 				{
-					public Card create() {
-						return new Reflexologist();
-					}
-				});
+					return new Reflexologist();
+				}
+			});
 
+	public Effect getEffect(Player p)
+	{
+		return new ReflexologistEffect(p, this);
+	}
 
-    public Effect getEffect(Player p) {
-        return new ReflexologistEffect(p, this);
-    }
+	public String name()
+	{
+		return cardName;
+	}
 
+	public String type()
+	{
+		return "Creature";
+	}
 
-    public String getName() {
-        return cardName;
-    }
+	public String ruleText()
+	{
+		return "Put in play a creature " + cardName + "(0/1) with tap: " + cardName + " does nothing";
+	}
 
-    public String type() {
-        return "Creature";
-    }
+	public String toString()
+	{
+		return name() + "[" + ruleText() + "]";
+	}
 
-    public String ruleText() {
-        return "Put in play a creature " + cardName + "(0/1) with tap: " + cardName + " does nothing";
-    }
+	public boolean isInstant()
+	{
+		return false;
+	}
 
-    public String toString() {
-        return getName() + "[" + ruleText() + "]";
-    }
+	private class ReflexologistEffect extends AbstractCreatureEffect
+	{
+		public ReflexologistEffect(Player p, Card c)
+		{
+			super(p, c);
+		}
 
-    public boolean isInstant() {
-        return false;
-    }
+		protected Creature createCreature()
+		{
+			return new ReflexologistCreature(owner);
+		}
 
-/*  public ImageIcon artImage(){
-        return new ImageIcon("src/resources/IMG_Reflexologist.jpg");
-    }*/
+	}
 
-    private class ReflexologistEffect extends AbstractCreatureEffect {
-        public ReflexologistEffect(Player p, Card c) {
-            super(p, c);
-        }
+	private class ReflexologistCreature extends AbstractCreature
+	{
 
-        protected Creature createCreature() {
-            return new ReflexologistCreature(owner);
-        }
+		ReflexologistCreature(Player owner)
+		{
+			super(owner);
+		}
 
-    }
+		public String name()
+		{
+			return cardName;
+		}
 
-    private class ReflexologistCreature extends AbstractCreature {
+		public int power()
+		{
+			return 0;
+		}
 
-        ReflexologistCreature(Player owner) {
-            super(owner);
-        }
+		public int toughness()
+		{
+			return 1;
+		}
 
-        public String getName() {
-            return cardName;
-        }
+		public List<Effect> effects()
+		{
+			ArrayList<Effect> effects = new ArrayList<>();
+			effects.add(new Reflexology());
+			return effects;
+		}
 
-        public int power() {
-            return 0;
-        }
+		public List<Effect> avaliableEffects()
+		{
+			ArrayList<Effect> effects = new ArrayList<>();
+			if(!topDecorator.isTapped())
+			{
+				effects.add(new Reflexology());
+			}
+			return effects;
+		}
 
-        public int toughness() {
-            return 1;
-        }
+		private class Reflexology extends AbstractEffect
+		{
+			public void resolve()
+			{
+			}
 
-        public List<Effect> effects() {
-            ArrayList<Effect> effects = new ArrayList<>();
-            effects.add(new Reflexology());
-            return effects;
-        }
+			public String name()
+			{
+				return "Reflexology";
+			}
 
-        public List<Effect> avaliableEffects() {
-            ArrayList<Effect> effects = new ArrayList<>();
-            if (!topDecorator.isTapped())
-                effects.add(new Reflexology());
-            return effects;
-        }
-
-        private class Reflexology extends AbstractEffect {
-            public void resolve() {
-            }
-
-            public String getName() {
-                return "Reflexology";
-            }
-
-            public String toString() {
-                return cardName + " tap: does nothing";
-            }
-        }
-    }
+			public String toString()
+			{
+				return cardName + " tap: does nothing";
+			}
+		}
+	}
 
 }

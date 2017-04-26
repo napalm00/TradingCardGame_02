@@ -15,7 +15,7 @@ public class BaseUntapPhase implements Phase
     {
         Player currentPlayer = Game.instance.getCurrentPlayer();
 
-        System.out.println("Untap phase of " + currentPlayer.getName());
+        System.out.println("Untap phase of " + currentPlayer.name());
 
         Game.instance.getTriggers().trigger(Triggers.UNTAP_FILTER);
 
@@ -26,7 +26,7 @@ public class BaseUntapPhase implements Phase
 
         for(Creature creature : currentPlayer.getCreatures())
         {
-            System.out.println("Untapping " + creature.getName());
+            System.out.println("Untapping " + creature.name());
             creature.untap();
         }
     }

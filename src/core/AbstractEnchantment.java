@@ -23,7 +23,7 @@ public abstract class AbstractEnchantment implements Enchantment
         
     @Override
         public String toString() {
-            return getName() + " (Enchantment)";
+            return name() + " (Enchantment)";
         }
 	
 }

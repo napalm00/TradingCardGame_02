@@ -28,7 +28,7 @@ public class SkipPhase implements Phase
     public void execute()
     {
         Player currentPlayer = Game.instance.getCurrentPlayer();
-        System.out.println(currentPlayer.getName() + " is skipping the " + phaseID + " phase");
+        System.out.println(currentPlayer.name() + " is skipping the " + phaseID + " phase");
         skipCount--;
 		
         if(skipCount == 0)

@@ -46,7 +46,7 @@ public class BaseDamageManager implements DamageManager
      */
     public void lose(String string)
     {
-        throw new EndOfGame(player.getName() + " lost the game, reason: " + string);
+        throw new EndOfGame(player.name() + " lost the game, reason: " + string);
     }
 
     /***

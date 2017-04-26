@@ -20,7 +20,8 @@ public abstract class AbstractCreatureEffect extends AbstractCardEffect
      */
     public void resolve()
     {
-        owner.getCreatures().add(new DecoratedCreature(owner, createCreature()));
-        Game.instance.getTriggers().trigger(Triggers.ENTER_CREATURE_FILTER);
+		Creature creature = createCreature();
+        owner.getCreatures().add(new DecoratedCreature(owner, creature));
+        Game.instance.getTriggers().trigger(Triggers.ENTER_CREATURE_FILTER, creature);
     }
 }

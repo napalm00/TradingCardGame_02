@@ -30,7 +30,7 @@ public class Game
     
     /***
      * Inserts in the turn manager a base turn.
-     * Creates the two players, inserting them in the players ArrayList and setting their getName to Player 1 and Player 2
+     * Creates the two players, inserting them in the players ArrayList and setting their name to Player 1 and Player 2
      */
     private Game()
     {
@@ -52,7 +52,7 @@ public class Game
     }
 
     /***
-     * Creates a new ArrayList for cards and sets getName and deck for both players.
+     * Creates a new ArrayList for cards and sets name and deck for both players.
      * Cards for each player deck are in two files containing a card per line. 
      * If a deck can't be read throws an exception 
      */
@@ -64,7 +64,7 @@ public class Game
         int count = 0;
         
         ArrayList<Card> playerOneDeck = new ArrayList<>();
-        System.out.println(players[0].getName() + " give the filename of your deck");
+        System.out.println(players[0].name() + " give the filename of your deck");
         try
         {
             Scanner playerOneDeckFile = new Scanner(new File(reader.nextLine()));
@@ -86,7 +86,7 @@ public class Game
         count = 0;
 
         ArrayList<Card> playerTwoDeck = new ArrayList<>();
-        System.out.println(players[1].getName() + " give the filename of your deck");
+        System.out.println(players[1].name() + " give the filename of your deck");
         try
         {
             Scanner playerTwoDeckFile = new Scanner(new File(reader.nextLine()));

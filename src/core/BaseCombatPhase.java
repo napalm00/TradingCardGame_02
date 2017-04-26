@@ -22,14 +22,14 @@ public class BaseCombatPhase implements Phase
         int active_player;
         int number_passes;
 
-        System.out.println(current_player.getName() + ": combat phase");
+        System.out.println(current_player.name() + ": combat phase");
 
         Game.instance.getTriggers().trigger(Triggers.COMBAT_FILTER);
 
 
         // declare attackers
         if (!current_player.getCreatures().isEmpty()) {
-            System.out.println(current_player.getName() + " choose attackers");
+            System.out.println(current_player.name() + " choose attackers");
             ArrayList<DecoratedCreature> potential_attackers = new ArrayList<>();
             int i = 1;
             for (DecoratedCreature c : current_player.getCreatures()) {
@@ -73,7 +73,7 @@ public class BaseCombatPhase implements Phase
         if (!adversary.getCreatures().isEmpty()) {
             for (CombatEntry e : combat) {
                 if (e.attacker.isRemoved()) continue;
-                System.out.println(adversary.getName() + " choose creatures defending from " + e.attacker);
+                System.out.println(adversary.name() + " choose creatures defending from " + e.attacker);
                 ArrayList<DecoratedCreature> potential_defenders = new ArrayList<>();
                 int i = 1;
                 for (DecoratedCreature c : adversary.getCreatures()) {
@@ -145,7 +145,7 @@ public class BaseCombatPhase implements Phase
 
             if (!is_blocked) {
                 //inflict damage to adversary player
-                System.out.println(e.attacker + " deals " + e.attacker.power() + " damage to " + adversary.getName());
+                System.out.println(e.attacker + " deals " + e.attacker.power() + " damage to " + adversary.name());
                 adversary.inflictDamage(Math.max(0, e.attacker.power()));
             } else {
                 //inflict cumulative damage to attacker

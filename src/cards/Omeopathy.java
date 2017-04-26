@@ -10,54 +10,56 @@ import interfaces.CardConstructor;
 
 public class Omeopathy extends AbstractCard
 {
-    static private final String cardName = "Omeopathy";
-			
-    static private StaticInitializer initializer = new StaticInitializer(cardName, new CardConstructor()
-        {
-            public Card create()
-            {
-                return new Omeopathy();
-            }
-        }
-    );
+	static private final String cardName = "Omeopathy";
 
-    public Effect getEffect(Player owner)
-    {
-        return new OmeopathyEffect(owner, this);
-    }
+	static private StaticInitializer initializer = new StaticInitializer(cardName, new CardConstructor()
+	{
+		public Card create()
+		{
+			return new Omeopathy();
+		}
+	}
+	);
 
-    public String getName()
-    {
-        return cardName;
-    }
+	public Effect getEffect(Player owner)
+	{
+		return new OmeopathyEffect(owner, this);
+	}
 
-    public String type()
-    {
-        return "Instant";
-    }
+	public String name()
+	{
+		return cardName;
+	}
 
-    public String ruleText()
-    {
-        return cardName + " does nothing";
-    }
+	public String type()
+	{
+		return "Instant";
+	}
 
-    public String toString()
-    {
-        return getName() + "[" + ruleText() + "]";
-    }
+	public String ruleText()
+	{
+		return cardName + " does nothing";
+	}
 
-    public boolean isInstant()
-    {
-        return true;
-    }
+	public String toString()
+	{
+		return name() + "[" + ruleText() + "]";
+	}
 
-    private class OmeopathyEffect extends AbstractCardEffect
-    {
-        public OmeopathyEffect(Player player, Card card)
-        {
-            super(player, card);
-        }
+	public boolean isInstant()
+	{
+		return true;
+	}
 
-        public void resolve() {}
-    }
+	private class OmeopathyEffect extends AbstractCardEffect
+	{
+		public OmeopathyEffect(Player player, Card card)
+		{
+			super(player, card);
+		}
+
+		public void resolve()
+		{
+		}
+	}
 }

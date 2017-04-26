@@ -34,9 +34,9 @@ public abstract class AbstractCardEffect extends AbstractEffect
      * 
      * @return		String		The card's name
      */
-    public String getName()
+    public String name()
     {
-        return card.getName();
+        return card.name();
     }
 
     public String toString()

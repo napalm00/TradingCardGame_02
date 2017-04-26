@@ -40,11 +40,11 @@ public class Player implements Damageable
     }
 
     /***
-     * Returns the player's getName
+     * Returns the player's name
      * 
-     * @return		String		The player's getName
+     * @return		String		The player's name
      */
-    public String getName()
+    public String name()
     {
         return name;
     }
@@ -353,7 +353,7 @@ public class Player implements Damageable
     public void draw()
     {
         Card drawn = library.draw();
-        System.out.println(getName() + " has drawn: " + drawn.getName());
+        System.out.println(name() + " has drawn: " + drawn.name());
         hand.add(drawn);
     }
 
@@ -364,7 +364,7 @@ public class Player implements Damageable
     {
         Scanner reader = Game.instance.getScanner();
 
-        System.out.println(getName() + " discard a card: ");
+        System.out.println(name() + " discard a card: ");
         for(int i = 0; i != hand.size(); ++i)
         {
             System.out.println(Integer.toString(i + 1) + ") " + hand.get(i));
