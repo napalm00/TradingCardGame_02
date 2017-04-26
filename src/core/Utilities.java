@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public abstract class Utilities
 {
-    public static boolean playAllAvaibleEffects(Player activePlayer, boolean isMain)
+    public static boolean playAllAvailableEffects(Player activePlayer, boolean isMain)
     {
         // If there are no more cards, pass automatically
         if(activePlayer.getHand().isEmpty() && activePlayer.getCreatures().isEmpty())

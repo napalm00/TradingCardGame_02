@@ -20,14 +20,14 @@ public class BaseMainPhase implements Phase
         Game.instance.getTriggers().trigger(Triggers.MAIN_FILTER);
         int numberOfPasses = 0;
 
-        if(!Utilities.playAllAvaibleEffects(currentPlayer, true))
+        if(!Utilities.playAllAvailableEffects(currentPlayer, true))
         {
             ++numberOfPasses;
         }
 
         while(numberOfPasses < 2)
         {
-            if(Utilities.playAllAvaibleEffects(Game.instance.getPlayer(responsePlayerID), false))
+            if(Utilities.playAllAvailableEffects(Game.instance.getPlayer(responsePlayerID), false))
             {
                 numberOfPasses = 0;
             }
@@ -39,7 +39,6 @@ public class BaseMainPhase implements Phase
             responsePlayerID = (responsePlayerID + 1) % 2;
         }
 
-        Game.instance.getEnchantmentStack().resolve();
         Game.instance.getCardStack().resolve();
     }
 }

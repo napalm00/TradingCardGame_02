@@ -8,6 +8,7 @@ public class Player implements Damageable
 {
     private final Library library = new Library(this);
     private final ArrayList<DecoratedCreature> creatures = new ArrayList<>();
+	private final ArrayList<Enchantment> enchantments = new ArrayList<>();
     DamageManager damageStrategyStack = new BaseDamageManager(this);
     private String name;
     private int life = 10;
@@ -384,4 +385,19 @@ public class Player implements Damageable
     {
         return creatures;
     }
+	
+	public void remove(DecoratedCreature c)
+	{
+		creatures.remove(c);
+	}
+	
+	public List<Enchantment> getEnchantments()
+    {
+        return enchantments;
+    }
+	
+	public void remove(Enchantment e)
+	{
+		enchantments.remove(e);
+	}
 }

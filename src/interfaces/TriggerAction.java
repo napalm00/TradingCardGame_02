@@ -2,5 +2,5 @@ package interfaces;
 
 public interface TriggerAction
 {
-    void execute();
+    void execute(Object args);
 }

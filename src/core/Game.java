@@ -21,9 +21,6 @@ public class Game
 
     // Card stack
     private CardStack cardStack = new CardStack();
-	
-    // Sorcery stack
-    private EnchantmentStack enchantmentStack = new EnchantmentStack();
 
     // Triggers
     private Triggers triggers = new Triggers();
@@ -215,16 +212,6 @@ public class Game
     public CardStack getCardStack()
     {
         return cardStack;
-    }
-    
-    /***
-     * Returns the sorceryStack
-     * 
-     * @return		EnchantmentStack	The enchantment stack structure
-     */
-    public EnchantmentStack getEnchantmentStack()
-    {
-        return enchantmentStack;
     }
 
     /***
