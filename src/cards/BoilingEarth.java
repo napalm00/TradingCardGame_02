@@ -19,37 +19,44 @@ public class BoilingEarth extends AbstractCard
 	static private StaticInitializer initializer
 			= new StaticInitializer(cardName, new CardConstructor()
 			{
+				@Override
 				public Card create()
 				{
 					return new BoilingEarth();
 				}
 			});
 
+	@Override
 	public Effect getEffect(Player owner)
 	{
 		return new BoilingEarthEffect(owner, this);
 	}
 
+	@Override
 	public String name()
 	{
 		return cardName;
 	}
 
+	@Override
 	public String type()
 	{
 		return "Sorcery";
 	}
 
+	@Override
 	public String ruleText()
 	{
 		return cardName + " deals 1 damage to each creature";
 	}
 
+	@Override
 	public String toString()
 	{
 		return name() + "[" + ruleText() + "]";
 	}
 
+	@Override
 	public boolean isInstant()
 	{
 		return false;
@@ -62,6 +69,7 @@ public class BoilingEarth extends AbstractCard
 			super(p, c);
 		}
 
+		@Override
 		public void resolve()
 		{
 

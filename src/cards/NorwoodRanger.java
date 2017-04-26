@@ -17,37 +17,44 @@ public class NorwoodRanger extends AbstractCard
 	static private StaticInitializer initializer
 			= new StaticInitializer(cardName, new CardConstructor()
 			{
+				@Override
 				public Card create()
 				{
 					return new NorwoodRanger();
 				}
 			});
 
+	@Override
 	public String name()
 	{
 		return cardName;
 	}
 
+	@Override
 	public String type()
 	{
 		return "Creature";
 	}
 
+	@Override
 	public String ruleText()
 	{
 		return "Put in play a creature " + cardName + "(1/2)";
 	}
 
+	@Override
 	public String toString()
 	{
 		return name() + "[" + ruleText() + "]";
 	}
 
+	@Override
 	public boolean isInstant()
 	{
 		return false;
 	}
 
+	@Override
 	public Effect getEffect(Player p)
 	{
 		return new NorwoodRangerEffect(p, this);
@@ -60,6 +67,7 @@ public class NorwoodRanger extends AbstractCard
 			super(p, c);
 		}
 
+		@Override
 		protected Creature createCreature()
 		{
 			return new NorwoodRangerCreature(owner);
@@ -74,21 +82,29 @@ public class NorwoodRanger extends AbstractCard
 			super(owner);
 		}
 
+		@Override
 		public String name()
 		{
 			return cardName;
 		}
 
+		@Override
 		public int power()
 		{
 			return 1;
 		}
 
+		@Override
 		public int toughness()
 		{
 			return 2;
 		}
-
+		
+		@Override
+		public boolean canBeTargeted()
+		{
+			return true;
+		}
 	}
 
 }

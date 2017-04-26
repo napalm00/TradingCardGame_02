@@ -9,33 +9,40 @@ import core.AbstractCard;
 import core.AbstractCreature;
 import core.AbstractCreatureEffect;
 import core.AbstractEffect;
+import core.AbstractEnchantment;
+import core.Game;
+import core.Phases;
 import core.Player;
+import core.SkipPhase;
 import core.StaticInitializer;
+import core.Triggers;
 import interfaces.Card;
 import interfaces.CardConstructor;
 import interfaces.Creature;
 import interfaces.Effect;
+import interfaces.TriggerAction;
+import interfaces.TurnManager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Reflexologist extends AbstractCard
+public class ArgothianEnchantress extends AbstractCard
 {
-	static private final String cardName = "Reflexologist";
-
+	static private final String cardName = "Argothian Enchantress";
+	
 	static private StaticInitializer initializer
 			= new StaticInitializer(cardName, new CardConstructor()
 			{
 				@Override
 				public Card create()
 				{
-					return new Reflexologist();
+					return new ArgothianEnchantress();
 				}
 			});
 
 	@Override
 	public Effect getEffect(Player p)
 	{
-		return new ReflexologistEffect(p, this);
+		return new ArgothianEnchantressEffect(p, this);
 	}
 
 	@Override
@@ -53,7 +60,7 @@ public class Reflexologist extends AbstractCard
 	@Override
 	public String ruleText()
 	{
-		return "Put in play a creature " + cardName + "(0/1) with tap: " + cardName + " does nothing";
+		return "Whenever you cast an enchantment spell, draw a card";
 	}
 
 	@Override
@@ -68,9 +75,9 @@ public class Reflexologist extends AbstractCard
 		return false;
 	}
 
-	private class ReflexologistEffect extends AbstractCreatureEffect
+	private class ArgothianEnchantressEffect extends AbstractCreatureEffect
 	{
-		public ReflexologistEffect(Player p, Card c)
+		public ArgothianEnchantressEffect(Player p, Card c)
 		{
 			super(p, c);
 		}
@@ -85,7 +92,6 @@ public class Reflexologist extends AbstractCard
 
 	private class ReflexologistCreature extends AbstractCreature
 	{
-
 		ReflexologistCreature(Player owner)
 		{
 			super(owner);
@@ -112,14 +118,14 @@ public class Reflexologist extends AbstractCard
 		@Override
 		public boolean canBeTargeted()
 		{
-			return true;
+			return false;
 		}
 		
 		@Override
 		public List<Effect> effects()
 		{
 			ArrayList<Effect> effects = new ArrayList<>();
-			effects.add(new Reflexology());
+			effects.add(new DrawEffect());
 			return effects;
 		}
 
@@ -129,30 +135,53 @@ public class Reflexologist extends AbstractCard
 			ArrayList<Effect> effects = new ArrayList<>();
 			if(!topDecorator.isTapped())
 			{
-				effects.add(new Reflexology());
+				effects.add(new DrawEffect());
 			}
 			return effects;
 		}
-
-		private class Reflexology extends AbstractEffect
+	}
+	
+	private class DrawEffect extends AbstractEffect
+	{
+		private final TriggerAction DrawCardAction = new TriggerAction()
 		{
 			@Override
-			public void resolve()
+			public void execute(Object args)
 			{
+				if(args != null && args instanceof AbstractEnchantment)
+				{
+					AbstractEnchantment enchantment = (AbstractEnchantment)args;
+					if(enchantment.getOwner().equals(Game.instance.getCurrentPlayer()))
+					{
+						Game.instance.getCurrentPlayer().setPhase(Phases.DRAW, new SkipPhase(Phases.DRAW));
+					}
+				}
 			}
+		};
+		
+		@Override
+		public void resolve()
+		{
+			Game.instance.getTriggers().register(Triggers.ENTER_ENCHANTMENT_FILTER, DrawCardAction);
+		}
 
-			@Override
-			public String name()
-			{
-				return "Reflexology";
-			}
+		@Override
+		public void remove()
+		{
+			super.remove();
+			Game.instance.getTriggers().remove(DrawCardAction);
+		}
 
-			@Override
-			public String toString()
-			{
-				return cardName + " tap: does nothing";
-			}
+		@Override
+		public String name()
+		{
+			return "DrawEffect";
+		}
+
+		@Override
+		public String toString()
+		{
+			return cardName + " DrawEffect";
 		}
 	}
-
 }

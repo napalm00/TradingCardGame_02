@@ -34,6 +34,8 @@ public interface Creature extends Named
 
     void onRemove();
 
+	boolean canBeTargeted();
+	
     List<Effect> effects();
 
     List<Effect> avaliableEffects();

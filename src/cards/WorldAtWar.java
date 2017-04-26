@@ -19,37 +19,44 @@ public class WorldAtWar extends AbstractCard
 	static private StaticInitializer initializer
 			= new StaticInitializer(cardName, new CardConstructor()
 			{
+				@Override
 				public Card create()
 				{
 					return new WorldAtWar();
 				}
 			});
 
+	@Override
 	public Effect getEffect(Player owner)
 	{
 		return new WorldAtWarEffect(owner, this);
 	}
 
+	@Override
 	public String name()
 	{
 		return cardName;
 	}
 
+	@Override
 	public String type()
 	{
 		return "Sorcery";
 	}
 
+	@Override
 	public String ruleText()
 	{
 		return "After the main phase this turn, there's an additional combat pahse followed by an additional main phase. At the baginning of that combat, untap all creatures";
 	}
 
+	@Override
 	public String toString()
 	{
 		return name() + "[" + ruleText() + "]";
 	}
 
+	@Override
 	public boolean isInstant()
 	{
 		return false;
@@ -62,6 +69,7 @@ public class WorldAtWar extends AbstractCard
 			super(p, c);
 		}
 
+		@Override
 		public void resolve()
 		{
 			Game.instance.getCurrentPlayer().setPhaseManager(new TurnChange());
@@ -73,6 +81,7 @@ public class WorldAtWar extends AbstractCard
 
 		private int phaseidx = 0;
 
+		@Override
 		public Phases currentPhase()
 		{
 			Phases result;
@@ -95,6 +104,7 @@ public class WorldAtWar extends AbstractCard
 			return result;
 		}
 
+		@Override
 		public Phases nextPhase()
 		{
 			++phaseidx;

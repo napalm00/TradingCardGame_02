@@ -22,37 +22,44 @@ public class VolcanicHammer extends AbstractCard
 	static private StaticInitializer initializer
 			= new StaticInitializer(cardName, new CardConstructor()
 			{
+				@Override
 				public Card create()
 				{
 					return new VolcanicHammer();
 				}
 			});
 
+	@Override
 	public String name()
 	{
 		return cardName;
 	}
 
+	@Override
 	public String type()
 	{
 		return "Sorcery";
 	}
 
+	@Override
 	public String ruleText()
 	{
 		return "Deal 3 damage to target creature or player";
 	}
 
+	@Override
 	public String toString()
 	{
 		return name() + " [" + ruleText() + "]";
 	}
 
+	@Override
 	public boolean isInstant()
 	{
 		return false;
 	}
 
+	@Override
 	public Effect getEffect(Player owner)
 	{
 		return new VolcanicHammerEffect(owner, this);
@@ -67,12 +74,14 @@ public class VolcanicHammer extends AbstractCard
 			super(p, c);
 		}
 
+		@Override
 		public boolean play()
 		{
 			pickTarget();
 			return super.play();
 		}
 
+		@Override
 		public String toString()
 		{
 			if(target == null)
@@ -85,6 +94,7 @@ public class VolcanicHammer extends AbstractCard
 			}
 		}
 
+		@Override
 		public void pickTarget()
 		{
 			System.out.println(owner.name() + ": choose target for " + name());
@@ -98,9 +108,12 @@ public class VolcanicHammer extends AbstractCard
 			++i;
 			for(DecoratedCreature c : curPlayer.getCreatures())
 			{
-				System.out.println(i + ") " + curPlayer.name() + ": " + c.name());
-				targets.add(c);
-				++i;
+				if(c.canBeTargeted())
+				{
+					System.out.println(i + ") " + curPlayer.name() + ": " + c.name());
+					targets.add(c);
+					++i;
+				}
 			}
 
 			curPlayer = Game.instance.getPlayer(1);
@@ -109,9 +122,12 @@ public class VolcanicHammer extends AbstractCard
 			++i;
 			for(DecoratedCreature c : curPlayer.getCreatures())
 			{
-				System.out.println(i + ") " + curPlayer.name() + ": " + c.name());
-				targets.add(c);
-				++i;
+				if(c.canBeTargeted())
+				{
+					System.out.println(i + ") " + curPlayer.name() + ": " + c.name());
+					targets.add(c);
+					++i;
+				}
 			}
 
 			Scanner reader = Game.instance.getScanner();
@@ -129,6 +145,7 @@ public class VolcanicHammer extends AbstractCard
 			}
 		}
 
+		@Override
 		public void resolve()
 		{
 			if(target == null)

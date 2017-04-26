@@ -260,4 +260,10 @@ public class DecoratedCreature implements Damageable, Creature
     {
         return decorated.toString();
     }
+
+	@Override
+	public boolean canBeTargeted()
+	{
+		return true;
+	}
 }

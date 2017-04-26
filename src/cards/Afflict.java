@@ -24,37 +24,44 @@ public class Afflict extends AbstractCard
 	static private StaticInitializer initializer
 			= new StaticInitializer(cardName, new CardConstructor()
 			{
+				@Override
 				public Card create()
 				{
 					return new Afflict();
 				}
 			});
 
+	@Override
 	public Effect getEffect(Player owner)
 	{
 		return new AfflictEffect(owner, this);
 	}
 
+	@Override
 	public String name()
 	{
 		return cardName;
 	}
 
+	@Override
 	public String type()
 	{
 		return "Instant";
 	}
 
+	@Override
 	public String ruleText()
 	{
 		return "Target creature gets -1/-1 until end of turn";
 	}
 
+	@Override
 	public String toString()
 	{
 		return name() + "[" + ruleText() + "]";
 	}
 
+	@Override
 	public boolean isInstant()
 	{
 		return true;
@@ -69,12 +76,14 @@ public class Afflict extends AbstractCard
 			super(p, c);
 		}
 
+		@Override
 		public boolean play()
 		{
 			pickTarget();
 			return super.play();
 		}
 
+		@Override
 		public void resolve()
 		{
 			if(target == null)
@@ -91,6 +100,7 @@ public class Afflict extends AbstractCard
 			final AfflictDecorator decorator = new AfflictDecorator();
 			TriggerAction action = new TriggerAction()
 			{
+				@Override
 				public void execute(Object args)
 				{
 					if(!target.isRemoved())
@@ -111,6 +121,7 @@ public class Afflict extends AbstractCard
 			target.addDecorator(decorator);
 		}
 
+		@Override
 		public void pickTarget()
 		{
 			System.out.println(owner.name() + ": choose target for " + name());
@@ -123,15 +134,21 @@ public class Afflict extends AbstractCard
 
 			for(DecoratedCreature c : player1.getCreatures())
 			{
-				System.out.println(i + ") " + player1.name() + ": " + c);
-				++i;
-				creatures.add(c);
+				if(c.canBeTargeted())
+				{
+					System.out.println(i + ") " + player1.name() + ": " + c);
+					++i;
+					creatures.add(c);
+				}
 			}
 			for(DecoratedCreature c : player2.getCreatures())
 			{
-				System.out.println(i + ") " + player2.name() + ": " + c);
-				++i;
-				creatures.add(c);
+				if(c.canBeTargeted())
+				{
+					System.out.println(i + ") " + player2.name() + ": " + c);
+					++i;
+					creatures.add(c);
+				}
 			}
 
 			Scanner reader = Game.instance.getScanner();
@@ -149,6 +166,7 @@ public class Afflict extends AbstractCard
 			}
 		}
 
+		@Override
 		public String toString()
 		{
 			if(target == null)
@@ -176,6 +194,7 @@ public class Afflict extends AbstractCard
 			action = a;
 		}
 
+		@Override
 		public void onRemove()
 		{
 			System.out.println("Removing " + cardName + " and deregistering end of turn trigger");
@@ -186,14 +205,22 @@ public class Afflict extends AbstractCard
 			super.onRemove();
 		}
 
+		@Override
 		public int power()
 		{
 			return decorated.power() - 1;
 		}
 
+		@Override
 		public int toughness()
 		{
 			return decorated.toughness() - 1;
+		}
+
+		@Override
+		public boolean canBeTargeted()
+		{
+			return true;
 		}
 	}
 }

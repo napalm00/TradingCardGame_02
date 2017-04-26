@@ -25,5 +25,9 @@ public abstract class AbstractEnchantment implements Enchantment
         public String toString() {
             return name() + " (Enchantment)";
         }
-	
+
+	public Player getOwner()
+	{
+		return owner;
+	}
 }

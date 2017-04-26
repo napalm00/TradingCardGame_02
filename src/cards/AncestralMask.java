@@ -1,89 +1,65 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package cards;
 
 import core.AbstractCard;
-import core.AbstractCardEffect;
 import core.AbstractCreatureDecorator;
+import core.AbstractEnchantment;
+import core.AbstractEnchantmentCardEffect;
 import core.DecoratedCreature;
 import core.Game;
 import core.Player;
 import core.StaticInitializer;
 import core.Triggers;
-import interfaces.CardConstructor;
 import interfaces.Card;
+import interfaces.CardConstructor;
+import interfaces.Creature;
 import interfaces.Effect;
+import interfaces.Enchantment;
 import interfaces.TargetingEffect;
 import interfaces.TriggerAction;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class AggressiveUrge extends AbstractCard
+public class AncestralMask extends AbstractCard
 {
-
-	static private final String cardName = "Aggressive Urge";
+	static private final String cardName = "Ancestral Mask";
 
 	static private StaticInitializer initializer
 			= new StaticInitializer(cardName, new CardConstructor()
 			{
-				@Override
 				public Card create()
 				{
-					return new AggressiveUrge();
+					return new AncestralMask();
 				}
 			});
 
-	@Override
-	public Effect getEffect(Player owner)
-	{
-		return new AggressiveUrgeEffect(owner, this);
-	}
-
-	@Override
-	public String name()
-	{
-		return cardName;
-	}
-
-	@Override
-	public String type()
-	{
-		return "Instant";
-	}
-
-	@Override
-	public String ruleText()
-	{
-		return "Target creature gets +1/+1 until end of turn";
-	}
-
-	@Override
-	public String toString()
-	{
-		return cardName + "[" + ruleText() + "]";
-	}
-
-	@Override
-	public boolean isInstant()
-	{
-		return true;
-	}
-
-	private class AggressiveUrgeEffect extends AbstractCardEffect implements TargetingEffect
+	private class AncestralMaskEffect extends AbstractEnchantmentCardEffect implements TargetingEffect
 	{
 		private DecoratedCreature target;
+		private int powerIncrement;
+		private int toughnessIncrement;
 
-		public AggressiveUrgeEffect(Player p, Card c)
+		public AncestralMaskEffect(Player p, Card c)
 		{
 			super(p, c);
 		}
 
 		@Override
+		protected Enchantment createEnchantment()
+		{
+			return new AncestralMaskEnchantment(owner);
+		}
+		
 		public boolean play()
 		{
 			pickTarget();
 			return super.play();
 		}
 
-		@Override
 		public void resolve()
 		{
 			if(target == null)
@@ -97,10 +73,9 @@ public class AggressiveUrge extends AbstractCard
 				return;
 			}
 
-			final AggressiveUrgeDecorator decorator = new AggressiveUrgeDecorator();
+			final AncestralMask.AncestralMaskDecorator decorator = new AncestralMask.AncestralMaskDecorator(powerIncrement, toughnessIncrement);
 			TriggerAction action = new TriggerAction()
 			{
-				@Override
 				public void execute(Object args)
 				{
 					if(!target.isRemoved())
@@ -114,17 +89,16 @@ public class AggressiveUrge extends AbstractCard
 					}
 				}
 			};
-			System.out.println("Ataching " + cardName + " to " + target.name() + " and registering end of turn trigger");
+			System.out.println("Attaching " + cardName + " to " + target.name() + " and registering end of turn trigger");
 			Game.instance.getTriggers().register(Triggers.END_FILTER, action);
 
 			decorator.setRemoveAction(action);
 			target.addDecorator(decorator);
 		}
 
-		@Override
 		public void pickTarget()
 		{
-			System.out.println(owner.name() + ": choose target for " + cardName);
+			System.out.println(owner.name() + ": choose target for " + name());
 
 			ArrayList<DecoratedCreature> creatures = new ArrayList<>();
 			int i = 1;
@@ -132,6 +106,18 @@ public class AggressiveUrge extends AbstractCard
 			Player player1 = Game.instance.getPlayer(0);
 			Player player2 = Game.instance.getPlayer(1);
 
+			for(Enchantment e : player1.getEnchantments())
+			{
+				powerIncrement += 2;
+				toughnessIncrement += 2;
+			}
+			
+			for(Enchantment e : player2.getEnchantments())
+			{
+				powerIncrement += 2;
+				toughnessIncrement += 2;
+			}
+			
 			for(DecoratedCreature c : player1.getCreatures())
 			{
 				if(c.canBeTargeted())
@@ -166,7 +152,6 @@ public class AggressiveUrge extends AbstractCard
 			}
 		}
 
-		@Override
 		public String toString()
 		{
 			if(target == null)
@@ -179,22 +164,60 @@ public class AggressiveUrge extends AbstractCard
 			}
 			else
 			{
-				return cardName + " [" + target.name() + " gets +1/+1 until end of turn]";
+				return name() + " [" + target.name() + " gets -1/-1 until end of turn]";
 			}
 		}
-
 	}
 
-	class AggressiveUrgeDecorator extends AbstractCreatureDecorator
+	@Override
+	public Effect getEffect(Player p)
+	{
+		return new AncestralMaskEffect(p, this);
+	}
+
+	private class AncestralMaskEnchantment extends AbstractEnchantment
+	{
+		public AncestralMaskEnchantment(Player owner)
+		{
+			super(owner);
+		}
+
+		@Override
+		public void insert()
+		{
+			super.insert();
+		}
+
+		@Override
+		public void remove()
+		{
+			super.remove();
+		}
+
+		@Override
+		public String name()
+		{
+			return cardName;
+		}
+	}
+	
+	class AncestralMaskDecorator extends AbstractCreatureDecorator
 	{
 		TriggerAction action;
+		int powerIncrement;
+		int toughnessIncrement;
 
+		public AncestralMaskDecorator(int powerIncrement, int toughnessIncrement)
+		{
+			this.powerIncrement = powerIncrement;
+			this.toughnessIncrement = toughnessIncrement;
+		}
+		
 		public void setRemoveAction(TriggerAction a)
 		{
 			action = a;
 		}
 
-		@Override
 		public void onRemove()
 		{
 			System.out.println("Removing " + cardName + " and deregistering end of turn trigger");
@@ -202,19 +225,18 @@ public class AggressiveUrge extends AbstractCard
 			{
 				Game.instance.getTriggers().remove(action);
 			}
+			
 			super.onRemove();
 		}
 
-		@Override
 		public int power()
 		{
-			return decorated.power() + 1;
+			return decorated.power() + this.powerIncrement;
 		}
 
-		@Override
 		public int toughness()
 		{
-			return decorated.toughness() + 1;
+			return decorated.toughness() + this.toughnessIncrement;
 		}
 		
 		@Override
@@ -224,4 +246,33 @@ public class AggressiveUrge extends AbstractCard
 		}
 	}
 
+	@Override
+	public String name()
+	{
+		return cardName;
+	}
+
+	@Override
+	public String type()
+	{
+		return "Enchantment";
+	}
+
+	@Override
+	public String ruleText()
+	{
+		return "Enchanted creature gets +2/+2 for each other enchantment on the battlefield";
+	}
+
+	@Override
+	public String toString()
+	{
+		return name() + " (" + type() + ") [" + ruleText() + "]";
+	}
+
+	@Override
+	public boolean isInstant()
+	{
+		return false;
+	}
 }

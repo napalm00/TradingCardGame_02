@@ -181,6 +181,12 @@ public abstract class AbstractCreatureDecorator implements CreatureDecorator
         }
     }
 
+	@Override
+	public boolean canBeTargeted()
+	{
+		return true;
+	}
+
     /***
      * Get the list of effects
      * 

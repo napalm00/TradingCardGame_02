@@ -14,6 +14,7 @@ public class Omeopathy extends AbstractCard
 
 	static private StaticInitializer initializer = new StaticInitializer(cardName, new CardConstructor()
 	{
+		@Override
 		public Card create()
 		{
 			return new Omeopathy();
@@ -21,31 +22,37 @@ public class Omeopathy extends AbstractCard
 	}
 	);
 
+	@Override
 	public Effect getEffect(Player owner)
 	{
 		return new OmeopathyEffect(owner, this);
 	}
 
+	@Override
 	public String name()
 	{
 		return cardName;
 	}
 
+	@Override
 	public String type()
 	{
 		return "Instant";
 	}
 
+	@Override
 	public String ruleText()
 	{
 		return cardName + " does nothing";
 	}
 
+	@Override
 	public String toString()
 	{
 		return name() + "[" + ruleText() + "]";
 	}
 
+	@Override
 	public boolean isInstant()
 	{
 		return true;
@@ -58,6 +65,7 @@ public class Omeopathy extends AbstractCard
 			super(player, card);
 		}
 
+		@Override
 		public void resolve()
 		{
 		}

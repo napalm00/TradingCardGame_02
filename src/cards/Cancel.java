@@ -19,37 +19,44 @@ public class Cancel extends AbstractCard
 	static private StaticInitializer initializer
 			= new StaticInitializer(cardName, new CardConstructor()
 			{
+				@Override
 				public Card create()
 				{
 					return new Cancel();
 				}
 			});
 
+	@Override
 	public String name()
 	{
 		return cardName;
 	}
 
+	@Override
 	public String type()
 	{
 		return "Instant";
 	}
 
+	@Override
 	public String ruleText()
 	{
 		return "Counter target spell";
 	}
 
+	@Override
 	public String toString()
 	{
 		return name() + " [" + ruleText() + "]";
 	}
 
+	@Override
 	public boolean isInstant()
 	{
 		return true;
 	}
 
+	@Override
 	public Effect getEffect(Player owner)
 	{
 		return new CancelEffect(owner, this);
@@ -64,12 +71,14 @@ public class Cancel extends AbstractCard
 			super(p, c);
 		}
 
+		@Override
 		public boolean play()
 		{
 			pickTarget();
 			return super.play();
 		}
 
+		@Override
 		public String toString()
 		{
 			if(target == null)
@@ -82,6 +91,7 @@ public class Cancel extends AbstractCard
 			}
 		}
 
+		@Override
 		public void pickTarget()
 		{
 			System.out.println(owner.name() + ": choose target for " + name());
@@ -108,6 +118,7 @@ public class Cancel extends AbstractCard
 			}
 		}
 
+		@Override
 		public void resolve()
 		{
 			if(target == null)

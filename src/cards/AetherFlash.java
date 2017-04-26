@@ -19,9 +19,9 @@ import interfaces.Effect;
 import interfaces.Enchantment;
 import interfaces.TriggerAction;
 
-public class FriendlyEnvironment extends AbstractCard
+public class AetherFlash extends AbstractCard
 {
-	static private final String cardName = "Friendly Environment";
+	static private final String cardName = "Aether Flash";
 
 	static private StaticInitializer initializer
 			= new StaticInitializer(cardName, new CardConstructor()
@@ -29,7 +29,7 @@ public class FriendlyEnvironment extends AbstractCard
 				@Override
 				public Card create()
 				{
-					return new FriendlyEnvironment();
+					return new AetherFlash();
 				}
 			});
 
@@ -60,7 +60,7 @@ public class FriendlyEnvironment extends AbstractCard
 			super(owner);
 		}
 
-		private final TriggerAction GreetingAction = new TriggerAction()
+		private final TriggerAction DamageAction = new TriggerAction()
 		{
 			@Override
 			public void execute(Object args)
@@ -68,7 +68,7 @@ public class FriendlyEnvironment extends AbstractCard
 				if(args != null && args instanceof Creature)
 				{
 					Creature c = (Creature) args;
-					System.out.println(name() + " says: \"Welcome " + c.name() + "!\"");
+					c.inflictDamage(2);
 				}
 			}
 		};
@@ -77,14 +77,14 @@ public class FriendlyEnvironment extends AbstractCard
 		public void insert()
 		{
 			super.insert();
-			Game.instance.getTriggers().register(Triggers.ENTER_CREATURE_FILTER, GreetingAction);
+			Game.instance.getTriggers().register(Triggers.ENTER_CREATURE_FILTER, DamageAction);
 		}
 
 		@Override
 		public void remove()
 		{
 			super.remove();
-			Game.instance.getTriggers().remove(GreetingAction);
+			Game.instance.getTriggers().remove(DamageAction);
 		}
 
 		@Override
@@ -109,7 +109,7 @@ public class FriendlyEnvironment extends AbstractCard
 	@Override
 	public String ruleText()
 	{
-		return "Whenever a creature enters the game " + name() + " welcomes it";
+		return "Whenever a creature enters comes into play, " + name() + " deals 2 damage to it";
 	}
 
 	@Override

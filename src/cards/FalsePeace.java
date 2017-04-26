@@ -22,37 +22,44 @@ public class FalsePeace extends AbstractCard
 	static private StaticInitializer initializer
 			= new StaticInitializer(cardName, new CardConstructor()
 			{
+				@Override
 				public Card create()
 				{
 					return new FalsePeace();
 				}
 			});
 
+	@Override
 	public String name()
 	{
 		return cardName;
 	}
 
+	@Override
 	public String type()
 	{
 		return "Sorcery";
 	}
 
+	@Override
 	public String ruleText()
 	{
 		return "Target player skips his next combat phase";
 	}
 
+	@Override
 	public String toString()
 	{
 		return name() + " [" + ruleText() + "]";
 	}
 
+	@Override
 	public boolean isInstant()
 	{
 		return false;
 	}
 
+	@Override
 	public Effect getEffect(Player owner)
 	{
 		return new FalsePeaceEffect(owner, this);
@@ -67,12 +74,14 @@ public class FalsePeace extends AbstractCard
 			super(p, c);
 		}
 
+		@Override
 		public boolean play()
 		{
 			pickTarget();
 			return super.play();
 		}
 
+		@Override
 		public String toString()
 		{
 			if(target == null)
@@ -85,6 +94,7 @@ public class FalsePeace extends AbstractCard
 			}
 		}
 
+		@Override
 		public void pickTarget()
 		{
 			System.out.println(owner.name() + ": choose target for " + name());
@@ -110,6 +120,7 @@ public class FalsePeace extends AbstractCard
 			}
 		}
 
+		@Override
 		public void resolve()
 		{
 			if(target != null)
