@@ -3,118 +3,124 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package cards;
 
 import core.AbstractCard;
-import core.AbstractCardEffect;
 import core.AbstractEnchantment;
+import core.AbstractEnchantmentCardEffect;
+import core.Game;
 import core.Player;
 import core.StaticInitializer;
+import core.Triggers;
 import interfaces.Card;
 import interfaces.CardConstructor;
+import interfaces.Creature;
 import interfaces.Effect;
-import interfaces.GameEntityVisitor;
-import interfaces.TargetingEffect;
+import interfaces.Enchantment;
+import interfaces.TriggerAction;
 
-public class AetherBarrier extends AbstractCard 
+public class AetherBarrier extends AbstractCard
 {
-    static private final String cardName = "Aether Barrier";
-      
-    static private StaticInitializer initializer = new StaticInitializer(cardName, new CardConstructor()
-        {
-            @Override
-            public Card create()
-            {
-                return new AetherBarrier();
-            }
-        }
-    );
+	static private final String cardName = "Aether Barrier";
 
-    @Override
-    public Effect getEffect(Player owner)
-    {
-        return new AetherBarrierEffect(owner);
-    }
+	static private StaticInitializer initializer
+			= new StaticInitializer(cardName, new CardConstructor()
+			{
+				@Override
+				public Card create()
+				{
+					return new AetherBarrier();
+				}
+			});
 
-    public String getName()
-    {
-        return cardName;
-    }
+	private class AetherBarrierEffect extends AbstractEnchantmentCardEffect
+	{
+		public AetherBarrierEffect(Player p, Card c)
+		{
+			super(p, c);
+		}
 
-    @Override
-    public String type()
-    {
-        return "Enchantment";
-    }
+		@Override
+		protected Enchantment createEnchantment()
+		{
+			return new AetherBarrierEnchantment(owner);
+		}
+	}
 
-    @Override
-    public String ruleText()
-    {
-        return "Whenever a player plays a creature spell,that player sacrifices a permanent";
-    }
+	@Override
+	public Effect getEffect(Player p)
+	{
+		return new AetherBarrierEffect(p, this);
+	}
 
-    @Override
-    public String toString()
-    {
-        return getName() + "[" + ruleText() + "]";
-    }
+	private class AetherBarrierEnchantment extends AbstractEnchantment
+	{
+		public AetherBarrierEnchantment(Player owner)
+		{
+			super(owner);
+		}
 
-    @Override
-    public boolean isInstant()
-    {
-        return false;
-    }
+		private final TriggerAction SacrificeAction = new TriggerAction()
+		{
+			@Override
+			public void execute(Object args)
+			{
+				if(args != null && args instanceof Creature)
+				{
+					Creature c = (Creature) args;
+					c.destroy();
+				}
+			}
+		};
 
-    @Override
-    public String name() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+		@Override
+		public void insert()
+		{
+			super.insert();
+			Game.instance.getTriggers().register(Triggers.ENTER_CREATURE_FILTER, SacrificeAction);
+		}
 
-    private class AetherBarrierEffect extends AbstractEnchantment implements TargetingEffect
-    {
-        private Player owner;
-        
-        public AetherBarrierEffect(Player owner)
-        {
-            super(owner);
-        }
+		@Override
+		public void remove()
+		{
+			super.remove();
+			Game.instance.getTriggers().remove(SacrificeAction);
+		}
 
-        
-        @Override
-        public boolean play()
-        {
-            pickTarget();
-            return super.play();
-        }
-        
-        @Override
-        public void pickTarget(){
-            
-        }
-        
-        public String getName() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }  
+		@Override
+		public String name()
+		{
+			return cardName;
+		}
+	}
 
-        @Override
-        public String name() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
+	@Override
+	public String name()
+	{
+		return cardName;
+	}
 
-        @Override
-        public void resolve() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
+	@Override
+	public String type()
+	{
+		return "Enchantment";
+	}
 
-        @Override
-        public boolean isRemoved() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
+	@Override
+	public String ruleText()
+	{
+		return "Whenever a player plays a creature spell,that player sacrifices a permanent";
+	}
 
-        @Override
-        public void accept(GameEntityVisitor gameEntityVisitor) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-    }
+	@Override
+	public String toString()
+	{
+		return name() + " (" + type() + ") [" + ruleText() + "]";
+	}
+
+	@Override
+	public boolean isInstant()
+	{
+		return false;
+	}
 }

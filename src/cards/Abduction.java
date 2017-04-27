@@ -108,6 +108,11 @@ public class Abduction extends AbstractCard
             {
                 if(target != null)
                     target.untap();
+                if(Game.instance.getCurrentAdversary().getCreatures().contains(target)){
+                    target.setOwner(owner);
+                    Game.instance.getCurrentPlayer().getCreatures().add(target);
+                    Game.instance.getCurrentAdversary().getCreatures().remove(target);
+                }
             }
 	
             @Override

@@ -24,6 +24,11 @@ public class DecoratedCreature implements Damageable, Creature
      * 
      * @param creatureDecorator The decorator to add
      */
+    
+    public void setOwner(Player owner){
+        this.owner=owner;
+    }
+    
     public void addDecorator(CreatureDecorator creatureDecorator)
     {
         decorated = creatureDecorator.decorate(decorated);
