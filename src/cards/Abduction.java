@@ -55,71 +55,83 @@ public class Abduction extends AbstractCard
 
 	private class FriendlyEnvironmentEnchantment extends AbstractEnchantment
 	{
-            private Player owner;
-            private DecoratedCreature target;
-            
-            public FriendlyEnvironmentEnchantment(Player owner)
-            {
-		super(owner);
-            }
-    
-            @Override
-            public String toString()
-            {
-                if(target == null)
-                    return super.toString() + " (no target)";
-                else
-                    return name()+ " [" + target.name()+ " untap]";
-            }
-  
-            public void pickTarget()
-            {
-                System.out.println(owner.name()+ ": choose target for " + name());
-                ArrayList<DecoratedCreature> creatures = new ArrayList<>();
-                int i = 1;
+		private Player owner;
+		private DecoratedCreature target;
 
-                Player player1 = Game.instance.getPlayer(0);
-                Player player2 = Game.instance.getPlayer(1);
+		public FriendlyEnvironmentEnchantment(Player owner)
+		{
+			super(owner);
+		}
 
-                for(DecoratedCreature decoratedCreature : player1.getCreatures())
-                {
-                    System.out.println(i + ") " + player1.name()+ ": " + decoratedCreature);
-                    i++;
-                    creatures.add(decoratedCreature);
-                }
-                for(DecoratedCreature decoratedCreature : player2.getCreatures())
-                {
-                    System.out.println(i + ") " + player2.name()+ ": " + decoratedCreature);
-                    i++;
-                    creatures.add(decoratedCreature);
-                }
+		@Override
+		public String toString()
+		{
+			if(target == null)
+			{
+				return super.toString() + " (no target)";
+			}
+			else
+			{
+				return name() + " [" + target.name() + " untap]";
+			}
+		}
 
-                Scanner reader = Game.instance.getScanner();
-                System.out.println("Enter a Target");
-                int idx = Integer.parseInt(reader.nextLine()) - 1;
+		public void pickTarget()
+		{
+			System.out.println(owner.name() + ": choose target for " + name());
+			ArrayList<DecoratedCreature> creatures = new ArrayList<>();
+			int i = 1;
 
-                if(idx < 0 || idx >= creatures.size())
-                    target = null;
-                else
-                    target = creatures.get(idx);
-            }
+			Player player1 = Game.instance.getPlayer(0);
+			Player player2 = Game.instance.getPlayer(1);
 
-            public void resolve()
-            {
-                if(target != null)
-                    target.untap();
-                if(Game.instance.getCurrentAdversary().getCreatures().contains(target)){
-                    target.setOwner(owner);
-                    Game.instance.getCurrentPlayer().getCreatures().add(target);
-                    Game.instance.getCurrentAdversary().getCreatures().remove(target);
-                }
-            }
-	
-            @Override
-            public String name()
-            {
-                return cardName;
-            }
+			for(DecoratedCreature decoratedCreature : player1.getCreatures())
+			{
+				System.out.println(i + ") " + player1.name() + ": " + decoratedCreature);
+				i++;
+				creatures.add(decoratedCreature);
+			}
+			for(DecoratedCreature decoratedCreature : player2.getCreatures())
+			{
+				System.out.println(i + ") " + player2.name() + ": " + decoratedCreature);
+				i++;
+				creatures.add(decoratedCreature);
+			}
+
+			Scanner reader = Game.instance.getScanner();
+			if(reader.hasNextInt())
+			{
+				int idx = reader.nextInt() - 1;
+				if(idx < 0 || idx >= creatures.size())
+				{
+					target = null;
+				}
+				else
+				{
+					target = creatures.get(idx);
+				}
+			}
+		}
+
+		public void resolve()
+		{
+			if(target != null)
+			{
+				target.untap();
+			}
+			if(Game.instance.getCurrentAdversary().getCreatures().contains(target))
+			{
+				target.setOwner(owner);
+				Game.instance.getCurrentPlayer().getCreatures().add(target);
+				Game.instance.getCurrentAdversary().getCreatures().remove(target);
+			}
+		}
+
+		@Override
+		public String name()
+		{
+			return cardName;
+		}
 	}
 
 	@Override
