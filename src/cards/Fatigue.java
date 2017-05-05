@@ -94,6 +94,7 @@ public class Fatigue extends AbstractCard
 			}
 		}
 
+                /*choose the target*/
 		@Override
 		public void pickTarget()
 		{
@@ -120,6 +121,7 @@ public class Fatigue extends AbstractCard
 			}
 		}
 
+                /*skip draw phase*/
 		@Override
 		public void resolve()
 		{

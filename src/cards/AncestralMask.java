@@ -201,6 +201,7 @@ public class AncestralMask extends AbstractCard
 		}
 	}
 	
+        /*enchanted creature gets +2/+2 for each other enchantment on the battlefield*/
 	class AncestralMaskDecorator extends AbstractCreatureDecorator
 	{
 		TriggerAction action;

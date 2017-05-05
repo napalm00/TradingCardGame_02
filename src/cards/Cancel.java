@@ -118,6 +118,7 @@ public class Cancel extends AbstractCard
 			}
 		}
 
+                /*counter target spell*/
 		@Override
 		public void resolve()
 		{

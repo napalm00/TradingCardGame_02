@@ -83,6 +83,7 @@ public class CalmingVerse extends AbstractCard
 			return super.toString();
 		}
 
+                /*destroy all enchantments not controlled by the player*/
 		@Override
 		public void resolve()
 		{

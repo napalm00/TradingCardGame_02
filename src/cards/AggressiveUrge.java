@@ -121,6 +121,7 @@ public class AggressiveUrge extends AbstractCard
 			target.addDecorator(decorator);
 		}
 
+                /*choice of target*/
 		@Override
 		public void pickTarget()
 		{
@@ -205,6 +206,7 @@ public class AggressiveUrge extends AbstractCard
 			super.onRemove();
 		}
 
+                /*target creature gets +1/+1 until end of turn*/
 		@Override
 		public int power()
 		{

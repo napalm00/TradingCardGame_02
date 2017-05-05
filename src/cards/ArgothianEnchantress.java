@@ -115,6 +115,7 @@ public class ArgothianEnchantress extends AbstractCard
 			return 1;
 		}
 
+                /*this creature can't be the target*/
 		@Override
 		public boolean canBeTargeted()
 		{
@@ -159,6 +160,7 @@ public class ArgothianEnchantress extends AbstractCard
 			}
 		};
 		
+                /*draw a card whenever you cast an enchantment spell*/
 		@Override
 		public void resolve()
 		{

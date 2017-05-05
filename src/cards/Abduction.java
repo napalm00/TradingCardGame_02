@@ -76,6 +76,7 @@ public class Abduction extends AbstractCard
 			}
 		}
 
+                /*choice of the target*/
 		public void pickTarget()
 		{
 			System.out.println(owner.name() + ": choose target for " + name());
@@ -113,6 +114,8 @@ public class Abduction extends AbstractCard
 			}
 		}
 
+                /*untap enchanted creature, when enchanted creature is put into
+                a graveyard return that creature to play under owner's control*/
 		public void resolve()
 		{
 			if(target != null)

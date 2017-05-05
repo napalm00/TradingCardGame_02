@@ -94,6 +94,7 @@ public class FalsePeace extends AbstractCard
 			}
 		}
 
+                /*choice of the target*/
 		@Override
 		public void pickTarget()
 		{
@@ -120,6 +121,7 @@ public class FalsePeace extends AbstractCard
 			}
 		}
 
+                /*skip next combat phase*/
 		@Override
 		public void resolve()
 		{

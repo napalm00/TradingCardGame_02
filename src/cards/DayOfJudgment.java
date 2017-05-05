@@ -69,6 +69,7 @@ public class DayOfJudgment extends AbstractCard
 			super(p, c);
 		}
 
+                /*destroy all creatures*/
 		@Override
 		public void resolve()
 		{

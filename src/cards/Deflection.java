@@ -91,7 +91,8 @@ public class Deflection extends AbstractCard
 				return name() + " [Change the target of " + target.name() + " with a single target]";
 			}
 		}
-
+                
+                /*choice of the target*/
 		@Override
 		public void pickTarget()
 		{
@@ -125,6 +126,7 @@ public class Deflection extends AbstractCard
 			}
 		}
 
+                /*change the target spell*/
 		@Override
 		public void resolve()
 		{

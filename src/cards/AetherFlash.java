@@ -60,6 +60,7 @@ public class AetherFlash extends AbstractCard
 			super(owner);
 		}
 
+                /*this card deals 2 damage to each creature whenever comes into play*/
 		private final TriggerAction DamageAction = new TriggerAction()
 		{
 			@Override

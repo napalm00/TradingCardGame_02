@@ -95,6 +95,7 @@ public class VolcanicHammer extends AbstractCard
 		}
 
 		@Override
+                /*choose of the target*/
 		public void pickTarget()
 		{
 			System.out.println(owner.name() + ": choose target for " + name());
@@ -146,6 +147,7 @@ public class VolcanicHammer extends AbstractCard
 		}
 
 		@Override
+                /*deals 3 damage*/
 		public void resolve()
 		{
 			if(target == null)

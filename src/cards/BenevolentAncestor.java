@@ -190,6 +190,7 @@ public class BenevolentAncestor extends AbstractCard
 				return super.play();
 			}
 
+                        /*choice of the target*/
 			@Override
 			public void pickTarget()
 			{
@@ -241,6 +242,7 @@ public class BenevolentAncestor extends AbstractCard
 				}
 			}
 
+                        /*prevent the next 1 damage*/
 			@Override
 			public void resolve()
 			{
