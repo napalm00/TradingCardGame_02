@@ -68,7 +68,7 @@ public class SavorTheMoment extends AbstractCard
 		{
 			super(p, c);
 		}
-
+                /*skip the untap step of the turn*/
 		@Override
 		public void resolve()
 		{
@@ -77,6 +77,7 @@ public class SavorTheMoment extends AbstractCard
 		}
 	}
 
+        /*take an extra turn*/
 	private class ExtraTurn implements TurnManager
 	{
 		private Player current;

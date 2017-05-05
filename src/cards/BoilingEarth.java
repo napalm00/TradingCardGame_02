@@ -68,7 +68,8 @@ public class BoilingEarth extends AbstractCard
 		{
 			super(p, c);
 		}
-
+                
+                /*this sorcery deals 1 damage to each creature*/
 		@Override
 		public void resolve()
 		{

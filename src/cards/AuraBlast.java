@@ -123,6 +123,7 @@ public class AuraBlast extends AbstractCard{
                 target = (Effect) stack.get(id);
         }
 
+        /*destroy all enchantment and draw a card*/
         @Override
         public void resolve()
         {

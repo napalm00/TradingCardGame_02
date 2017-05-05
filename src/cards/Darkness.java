@@ -72,6 +72,7 @@ public class Darkness extends AbstractCard
 			super(p, c);
 		}
 
+                /*prevent all combat damage of this turn*/
 		@Override
 		public void resolve()
 		{
