@@ -16,6 +16,7 @@ import interfaces.Card;
 import interfaces.Creature;
 import interfaces.Damageable;
 import interfaces.Effect;
+import interfaces.Enchantment;
 import interfaces.GameEntityVisitor;
 import interfaces.TargetingEffect;
 import interfaces.TriggerAction;
@@ -309,6 +310,11 @@ public class BenevolentAncestor extends AbstractCard
 								}
 						);
 					}
+					
+					@Override
+					public void visit(Enchantment e)
+					{
+					}//should not happen
 
 				}); //end accept
 

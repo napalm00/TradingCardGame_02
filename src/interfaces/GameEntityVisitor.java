@@ -12,4 +12,6 @@ public interface GameEntityVisitor
     void visit(Effect effect);
 
     void visit(DecoratedCreature decoratedCreature);
+	
+	void visit(Enchantment enchantment);
 }
